@@ -20,7 +20,6 @@ namespace API
 		public Startup(IConfiguration config)
 		{
 			_config = config;
-
 		}
 
 		// This method gets called by the runtime. Use this method to add services to the container.
@@ -31,8 +30,8 @@ namespace API
 				options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
 			});
 			
-
 			services.AddControllers();
+			services.AddCors();
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -52,6 +51,12 @@ namespace API
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+
+			//x = Policy
+			//Allows to work with the 4200 port because normaly you cant work with different ports
+			//This code says you can do any of this x.AllowAnyHeader().AllowAnyMethod() but only if you come from WithOrigins
+			app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
 			app.UseAuthorization();
 
