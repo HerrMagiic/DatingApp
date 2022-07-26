@@ -2,7 +2,7 @@
 
 ssl
 
-# compiled outputd
+# compiled output
 /dist
 /tmp
 /out-tsc
